@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <ctime>
 #include "RLE.h"
 
 
@@ -8,20 +9,25 @@ using namespace std;
 
 string rle(string filename)
 {
-    ///ввод
-    ifstream in_file("C:\\Users\\ПК\\Desktop\\проги\\проект 10.2\\compressor\\tests\\input\\test1.txt");
-    if (!in_file.is_open()) return "FAIL1";
+    string result = "";
+    unsigned int start = clock();
 
+    /// ввод
+    ifstream in_file("C:\\Users\\ПК\\Desktop\\проги\\проект 10.2\\compressor\\tests\\input\\"+filename+".txt");
+    if (!in_file.is_open()) return "FAIL1";
+    in_file.seekg(0, ios_base::end);
+    int src_size = in_file.tellg();
+    in_file.seekg(0, ios_base::beg);
     string line;
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
     //cout << str << endl;
     in_file.close();
-    //ввод
+    // ввод
 
-    ///вывод
-    ofstream out_file("C:\\Users\\ПК\\Desktop\\проги\\проект 10.2\\compressor\\tests\\RLE_out\\test1.min",
+    /// вывод
+    ofstream out_file("C:\\Users\\ПК\\Desktop\\проги\\проект 10.2\\compressor\\tests\\RLE_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
     if (!out_file.is_open()) return "FAIL2";
 
@@ -48,21 +54,25 @@ string rle(string filename)
     out_file.write((char *)&current,sizeof(current));
     counter=1;
     out_file.close();
-    //вывод
+    // вывод
 
+    result += to_string((float)(clock()-start)/1000);
+    start = clock();
+
+    /// раскодирование для замера
     ifstream bin_file("C:\\Users\\ПК\\Desktop\\проги\\проект 10.2\\compressor\\tests\\RLE_out\\test1.min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3";
     bin_file.seekg(0, ios_base::end);
-    int len = bin_file.tellg();
+    int res_size = bin_file.tellg();
     bin_file.seekg(0, ios_base::beg);
-    unsigned char bytes[len];
-    bin_file.read((char*)bytes, len);
+    unsigned char bytes[res_size];
+    bin_file.read((char*)bytes, res_size);
     str="";
-    for (int i = 0; i < len; i+=2)
-    {
-        str += string(bytes[i],bytes[i+1]);
-    }
-    cout<<str<<endl;
+    for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
+    // раскодирование для замера
 
-    return to_string(0);
+    result += "/" + to_string((float)(clock()-start)/1000);
+    result+="/"+to_string((float)src_size/res_size);
+
+    return result;
 }
