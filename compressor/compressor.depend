@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1643891918 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+	<iostream>
+	"RLE.h"
+
+1643890995 c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.h
+	<string>
+
+1643892680 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
+	<string>
+	<fstream>
+	<iostream>
+	"RLE.h"
+
