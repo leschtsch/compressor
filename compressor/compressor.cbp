@@ -32,8 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="BWT.cpp" />
 		<Unit filename="RLE.cpp" />
-		<Unit filename="RLE.h" />
+		<Unit filename="algorithms.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

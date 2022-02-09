@@ -1,14 +1,28 @@
 # depslib dependency file v1.0
-1643894550 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+1644412648 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
 	<iostream>
-	"RLE.h"
+	<windows.h>
+	<fstream>
+	"algorithms.h"
 
 1643890995 c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.h
 	<string>
 
-1643892680 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
+1644410770 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
 	<string>
 	<fstream>
 	<iostream>
-	"RLE.h"
+	<ctime>
+	"algorithms.h"
+
+1644229303 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
+	<string>
+
+1644410771 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt.cpp
+	<string>
+	<fstream>
+	<iostream>
+	<ctime>
+	<algorithm>
+	"algorithms.h"
 
