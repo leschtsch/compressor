@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="BWT.cpp" />
+		<Unit filename="MTF.cpp" />
 		<Unit filename="RLE.cpp" />
 		<Unit filename="algorithms.h" />
 		<Unit filename="main.cpp" />

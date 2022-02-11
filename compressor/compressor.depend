@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1644412648 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+1644595344 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
 	<iostream>
 	<windows.h>
 	<fstream>
@@ -8,17 +8,33 @@
 1643890995 c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.h
 	<string>
 
-1644410770 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
+1644594856 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
 	<string>
 	<fstream>
 	<iostream>
 	<ctime>
 	"algorithms.h"
 
-1644229303 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
+1644594790 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
 	<string>
 
-1644410771 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt.cpp
+1644595043 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt.cpp
+	<string>
+	<fstream>
+	<iostream>
+	<ctime>
+	<algorithm>
+	"algorithms.h"
+
+1644594854 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\mtf.cpp
+	<string>
+	<fstream>
+	<iostream>
+	<ctime>
+	<algorithm>
+	"algorithms.h"
+
+1644595249 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt_mtf.cpp
 	<string>
 	<fstream>
 	<iostream>

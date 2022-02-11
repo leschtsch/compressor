@@ -13,8 +13,8 @@ string rle(string filename)
     unsigned int start = clock();
 
     /// ввод
-    ifstream in_file("tests\\input\\"+filename+".txt");
-    if (!in_file.is_open()) return "FAIL1";
+    ifstream in_file("..\\tests\\input\\"+filename+".txt");
+    if (!in_file.is_open()) return "FAIL1;;";
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
     in_file.seekg(0, ios_base::beg);
@@ -27,9 +27,9 @@ string rle(string filename)
     // ввод
 
     /// вывод
-    ofstream out_file("tests\\RLE_out\\"+filename+".min",
+    ofstream out_file("..\\tests\\RLE_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
-    if (!out_file.is_open()) return "FAIL2";
+    if (!out_file.is_open()) return "FAIL2;;";
 
     unsigned char counter = 0;
     unsigned char current = str[0];
@@ -60,8 +60,8 @@ string rle(string filename)
     start = clock();
 
     /// раскодирование для замера
-    ifstream bin_file("tests\\RLE_out\\"+filename+".min", ios_base::binary);
-    if (!bin_file.is_open()) return "FAIL3";
+    ifstream bin_file("..\\tests\\RLE_out\\"+filename+".min", ios_base::binary);
+    if (!bin_file.is_open()) return "FAIL3;;";
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();
     bin_file.seekg(0, ios_base::beg);
