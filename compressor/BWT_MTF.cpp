@@ -49,10 +49,7 @@ string bwt_reverse1(string s)
     for (unsigned int i = 0; i < s.size(); i++)
     {
         last_col[i] = pair<char,int> (s[i],i);
-        if (s[i]==EOL1)
-        {
-            ind = i;
-        }
+        if (s[i]==EOL1) ind = i;
     }
     sort(last_col, last_col+s.size());
     int translations[s.size()];
@@ -72,29 +69,31 @@ string bwt_mtf(string filename)
 {
     for (int i = 0; i<256; i++) alphabet1[i]=(char)i;
 
-
-
     string result = "";
     unsigned int start = clock();
 
-    /// ввод
+    /// ввод ======================================================================================
     ifstream in_file("..\\tests\\input\\"+filename+".txt");
     if (!in_file.is_open()) return "FAIL1;;";
+
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
     in_file.seekg(0, ios_base::beg);
+
     string line, transformed;
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE1) transformed+=bwt_direct1(str.substr(i,BLOCK_SIZE1));
     str = transformed;
     transformed = "";
     for (unsigned int i = 0; i<str.size(); i++) transformed+=mtf_direct1(str[i]);
-    in_file.close();
-    // ввод
 
-    /// вывод
+    in_file.close();
+    // ввод =======================================================================================
+
+    /// вывод =====================================================================================
     ofstream out_file("..\\tests\\BWT_MTF_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
     if (!out_file.is_open()) return "FAIL2;;";
@@ -118,35 +117,44 @@ string bwt_mtf(string filename)
             counter=0;
         }
     }
+
     out_file.write((char *)&counter,sizeof(counter));
     out_file.write((char *)&current,sizeof(current));
     counter=1;
     out_file.close();
-    // вывод
+    // вывод ======================================================================================
 
     result += to_string((float)(clock()-start)/1000);
+
     for (int i = 0; i<256; i++) alphabet1[i]=(char)i;
+
     start = clock();
 
-    /// раскодирование для замера
+    /// раскодирование для замера =================================================================
     ifstream bin_file("..\\tests\\BWT_MTF_out\\"+filename+".min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3;;";
+
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();
     bin_file.seekg(0, ios_base::beg);
+
     unsigned char bytes[res_size];
     bin_file.read((char*)bytes, res_size);
+
     str="";
     transformed = "";
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
+
     for (unsigned int i=0; i < str.size(); i++) transformed += mtf_reverse1(str[i]);
     str=transformed;
     transformed = "";
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE1+1) transformed+=bwt_reverse1(str.substr(i,BLOCK_SIZE1+1));
+
     bin_file.close();
-    // раскодирование для замера
+    // раскодирование для замера ==================================================================
 
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+
     return result;
 }

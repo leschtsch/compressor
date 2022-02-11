@@ -14,11 +14,12 @@ int main()
     HANDLE hf;
     hf=FindFirstFile("..\\tests\\input\\*.txt", &FindFileData);
     if (hf==INVALID_HANDLE_VALUE) return -1;
+
     do
     {
         filename = FindFileData.cFileName;
 
-        filename.erase(filename.length()-4,4);
+        filename.erase(filename.length()-4,4); // стереть .txt
         result << filename << ";;";
         cout << filename << ":" << endl;
 
@@ -41,8 +42,10 @@ int main()
         cout << endl;
     }
     while (FindNextFile(hf,&FindFileData)!=0);
+
     result.close();
     FindClose(hf);
+
     system("pause");
     return 0;
 }
