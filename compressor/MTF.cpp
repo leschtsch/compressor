@@ -8,10 +8,10 @@
 using namespace std;
 
 
-char alphabet[256];
+static char alphabet[256];
 
 
-char mtf_direct(char letter)
+static char mtf_direct(char letter)
 {
     char ind = 0;
     while (alphabet[int(ind)]!=letter) ind++;
@@ -20,7 +20,7 @@ char mtf_direct(char letter)
     return ind;
 }
 
-char mtf_reverse(char ind)
+static char mtf_reverse(char ind)
 {
     char letter = alphabet[int(ind)];
     for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
@@ -37,7 +37,7 @@ string mtf(string filename)
 
 
     string result = "";
-    unsigned int start = clock();
+    float start = clock();
 
     /// ввод ======================================================================================
     ifstream in_file("..\\tests\\input\\"+filename+".txt");

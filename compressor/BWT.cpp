@@ -8,11 +8,11 @@
 using namespace std;
 
 
-int BLOCK_SIZE = 1024;
-char EOL = (char) 0;
+static int BLOCK_SIZE = 1024;
+static char EOL = (char) 0;
 
 
-string bwt_direct(string s)
+static string bwt_direct(string s)
 {
     s += EOL;
     string matrix[s.size()];
@@ -24,7 +24,7 @@ string bwt_direct(string s)
 }
 
 
-string bwt_reverse(string s)
+static string bwt_reverse(string s)
 {
     pair<char, int> last_col[s.size()];
     int ind;
@@ -52,7 +52,7 @@ string bwt_reverse(string s)
 string bwt(string filename)
 {
     string result = "";
-    unsigned int start = clock();
+    float start = clock();
 
     ///ввод =======================================================================================
     ifstream in_file("..\\tests\\input\\"+filename+".txt");

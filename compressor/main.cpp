@@ -7,7 +7,7 @@ int main()
 {
     ofstream result("..\\tests\\result.csv");
     if (!result.is_open()) return -1;
-    result << ";;RLE;;;;BWT-RLE;;;;MTF;;;;BWT_MTF" << endl;
+    result << ";;RLE;;;;BWT-RLE;;;;MTF;;;;BWT_MTF;;;;Shannon_Fano" << endl;
     string filename, res;
 
     WIN32_FIND_DATA FindFileData;
@@ -25,19 +25,23 @@ int main()
 
         res = rle(filename);
         result << res << ";;";
-        cout << "RLE:" << " " << res << endl;
+        cout << "RLE:" << "\t\t" << res << endl;
 
         res = bwt(filename);
         result <<  res << ";;";
-        cout << "BWT:" << " " << res << endl;
+        cout << "BWT:" << "\t\t" << res << endl;
 
         res = mtf(filename);
         result <<  res << ";;";
-        cout << "MTF:" << " " << res << endl;
+        cout << "MTF:" << "\t\t" << res << endl;
 
         res = bwt_mtf(filename);
+        result <<  res << ";;";
+        cout << "BWT_MTF:" << "\t" << res << endl;
+
+        res = ShF(filename);
         result <<  res << "" << endl;
-        cout << "BWT_MTF:" << " " << res << endl;
+        cout << "Shannon_Fano:" << "\t" << res << endl;
 
         cout << endl;
     }

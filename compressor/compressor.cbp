@@ -36,6 +36,7 @@
 		<Unit filename="BWT_MTF.cpp" />
 		<Unit filename="MTF.cpp" />
 		<Unit filename="RLE.cpp" />
+		<Unit filename="ShannonFano.cpp" />
 		<Unit filename="algorithms.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

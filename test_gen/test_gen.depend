@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1646926038 source:c:\users\ПК\desktop\проги\проект 10.2\test_gen\main.cpp
+	<iostream>
+	<fstream>
+	<ctime>
+	<cstdlib>
+	<string>
+

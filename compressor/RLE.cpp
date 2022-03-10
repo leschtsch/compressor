@@ -10,7 +10,7 @@ using namespace std;
 string rle(string filename)
 {
     string result = "";
-    unsigned int start = clock();
+    float start = clock();
 
     /// ввод ======================================================================================
     ifstream in_file("..\\tests\\input\\"+filename+".txt");
@@ -77,8 +77,7 @@ string rle(string filename)
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
 
     bin_file.close();
-    // раскодирование для замера ==================================================================
-
+    // раскодирование для замера ==================================================================*
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
 

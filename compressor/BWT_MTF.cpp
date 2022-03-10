@@ -8,31 +8,31 @@
 using namespace std;
 
 
-char alphabet1[256];
-int BLOCK_SIZE1 = 1024;
-char EOL1 = (char) 0;
+static char alphabet[256];
+static int BLOCK_SIZE = 1024;
+static char EOL = (char) 0;
 
 
-char mtf_direct1(char letter)
+static char mtf_direct(char letter)
 {
     char ind = 0;
-    while (alphabet1[int(ind)]!=letter) ind++;
-    for (int i = ind; i>0; i--) alphabet1[i]=alphabet1[i-1];
-    alphabet1[0] = letter;
+    while (alphabet[int(ind)]!=letter) ind++;
+    for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
+    alphabet[0] = letter;
     return ind;
 }
 
-char mtf_reverse1(char ind)
+static char mtf_reverse(char ind)
 {
-    char letter = alphabet1[int(ind)];
-    for (int i = ind; i>0; i--) alphabet1[i]=alphabet1[i-1];
-    alphabet1[0] = letter;
+    char letter = alphabet[int(ind)];
+    for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
+    alphabet[0] = letter;
     return letter;
 }
 
-string bwt_direct1(string s)
+static string bwt_direct(string s)
 {
-    s += EOL1;
+    s += EOL;
     string matrix[s.size()];
     for (unsigned int i =0; i < s.size(); i++) matrix[i] = s.substr(i,s.size()-i)+s.substr(0,i);
     sort(matrix,matrix+s.size());
@@ -42,14 +42,14 @@ string bwt_direct1(string s)
 }
 
 
-string bwt_reverse1(string s)
+static string bwt_reverse1(string s)
 {
     pair<char, int> last_col[s.size()];
     int ind;
     for (unsigned int i = 0; i < s.size(); i++)
     {
         last_col[i] = pair<char,int> (s[i],i);
-        if (s[i]==EOL1) ind = i;
+        if (s[i]==EOL) ind = i;
     }
     sort(last_col, last_col+s.size());
     int translations[s.size()];
@@ -67,10 +67,10 @@ string bwt_reverse1(string s)
 
 string bwt_mtf(string filename)
 {
-    for (int i = 0; i<256; i++) alphabet1[i]=(char)i;
+    for (int i = 0; i<256; i++) alphabet[i]=(char)i;
 
     string result = "";
-    unsigned int start = clock();
+    float start = clock();
 
     /// ввод ======================================================================================
     ifstream in_file("..\\tests\\input\\"+filename+".txt");
@@ -85,10 +85,10 @@ string bwt_mtf(string filename)
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
 
-    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE1) transformed+=bwt_direct1(str.substr(i,BLOCK_SIZE1));
+    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE) transformed+=bwt_direct(str.substr(i,BLOCK_SIZE));
     str = transformed;
     transformed = "";
-    for (unsigned int i = 0; i<str.size(); i++) transformed+=mtf_direct1(str[i]);
+    for (unsigned int i = 0; i<str.size(); i++) transformed+=mtf_direct(str[i]);
 
     in_file.close();
     // ввод =======================================================================================
@@ -126,7 +126,7 @@ string bwt_mtf(string filename)
 
     result += to_string((float)(clock()-start)/1000);
 
-    for (int i = 0; i<256; i++) alphabet1[i]=(char)i;
+    for (int i = 0; i<256; i++) alphabet[i]=(char)i;
 
     start = clock();
 
@@ -145,10 +145,10 @@ string bwt_mtf(string filename)
     transformed = "";
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
 
-    for (unsigned int i=0; i < str.size(); i++) transformed += mtf_reverse1(str[i]);
+    for (unsigned int i=0; i < str.size(); i++) transformed += mtf_reverse(str[i]);
     str=transformed;
     transformed = "";
-    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE1+1) transformed+=bwt_reverse1(str.substr(i,BLOCK_SIZE1+1));
+    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+1) transformed+=bwt_reverse1(str.substr(i,BLOCK_SIZE+1));
 
     bin_file.close();
     // раскодирование для замера ==================================================================
