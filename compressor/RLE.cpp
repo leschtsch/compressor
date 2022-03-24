@@ -9,6 +9,7 @@ using namespace std;
 
 string rle(string filename)
 {
+    string in, out;
     string result = "";
     float start = clock();
 
@@ -24,6 +25,7 @@ string rle(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+    in = str;
 
     in_file.close();
     // ввод =======================================================================================
@@ -75,11 +77,13 @@ string rle(string filename)
 
     str="";
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
+    out = str;
 
     bin_file.close();
     // раскодирование для замера ==================================================================*
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+    result+=((in==out) ? ";OK" : ";ERR");
 
     return result;
 }

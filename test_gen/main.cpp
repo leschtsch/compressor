@@ -239,5 +239,6 @@ int main()
     not_random(3, "someexampletext");
     not_random(3, "disarraycalumniatordiviner");
     not_random(3, "barmanexhilarationcauseless");
+    system("pause");
     return 0;
 }

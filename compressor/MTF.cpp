@@ -35,7 +35,7 @@ string mtf(string filename)
     for (int i = 0; i<256; i++) alphabet[i]=(char)i;
 
 
-
+    string in, out;
     string result = "";
     float start = clock();
 
@@ -53,6 +53,7 @@ string mtf(string filename)
     str.erase(str.length()-1,1);
 
     for (unsigned int i = 0; i<str.size(); i++) transformed+=mtf_direct(str[i]);
+    in = str;
 
     in_file.close();
     // ввод =======================================================================================
@@ -108,12 +109,14 @@ string mtf(string filename)
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
 
     for (unsigned int i=0; i < str.size(); i++) transformed += mtf_reverse(str[i]);
+    out = transformed;
 
     bin_file.close();
     // раскодирование для замера ==================================================================
 
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+    result+=((in==out) ? ";OK" : ";ERR");
 
     return result;
 }

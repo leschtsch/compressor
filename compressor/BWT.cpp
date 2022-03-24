@@ -51,6 +51,7 @@ static string bwt_reverse(string s)
 
 string bwt(string filename)
 {
+    string in, out;
     string result = "";
     float start = clock();
 
@@ -67,6 +68,7 @@ string bwt(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+    in = str;
 
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE) transformed+=bwt_direct(str.substr(i,BLOCK_SIZE));
     //ввод ========================================================================================
@@ -121,12 +123,14 @@ string bwt(string filename)
 
     transformed="";
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+1) transformed+=bwt_reverse(str.substr(i,BLOCK_SIZE+1));
+    out = transformed;
 
     bin_file.close();
     // раскодирование для замера ==================================================================
 
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+    result+=((in==out) ? ";OK" : ";ERR");
 
     return result;
 }

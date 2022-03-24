@@ -69,6 +69,7 @@ string bwt_mtf(string filename)
 {
     for (int i = 0; i<256; i++) alphabet[i]=(char)i;
 
+    string in, out;
     string result = "";
     float start = clock();
 
@@ -84,6 +85,7 @@ string bwt_mtf(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+    in = str;
 
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE) transformed+=bwt_direct(str.substr(i,BLOCK_SIZE));
     str = transformed;
@@ -150,11 +152,13 @@ string bwt_mtf(string filename)
     transformed = "";
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+1) transformed+=bwt_reverse1(str.substr(i,BLOCK_SIZE+1));
 
+    out = transformed;
     bin_file.close();
     // раскодирование для замера ==================================================================
 
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+    result+=((in==out) ? ";OK" : ";ERR");
 
     return result;
 }

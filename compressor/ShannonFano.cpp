@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <algorithm>
+#include <map>
 #include "algorithms.h"
 
 using namespace std;
@@ -15,7 +16,7 @@ static string dec2bin(unsigned char n)
         r=(n%2==0 ?"0":"1")+r;
         n/=2;
     }
-    return r;
+    return string(8-r.size(),'0') + r;
 }
 
 static unsigned char bin2dec(string s)
@@ -77,6 +78,7 @@ string ShF(string filename)
     for (int i = 0; i < 256; i++) frequences[i]= {(char)i,0};
     for (int i = 0; i < 256; i++) codes[i]="";
 
+    string in, out;
     string result = "";
     float start = clock();
 
@@ -92,11 +94,14 @@ string ShF(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+    in = str;
 
     in_file.close();
     // ввод =======================================================================================
 
     /// вывод =====================================================================================
+    int len = str.size();
+
     get_freq(str);
     sort(frequences, frequences+256, comp);
     int i = 0;
@@ -108,16 +113,18 @@ string ShF(string filename)
                       ios_base::out | ios_base::trunc|ios_base::binary);
     if (!out_file.is_open()) return "FAIL2;;";
 
+
+    out_file.write((char*)&len, sizeof(len));
     string buff = "";
     int t = 0;
     for (int i = 0; i < 256; i++) if (codes[i].size()>0)
         {
-            buff += string(8-dec2bin(i).size(),'0')+dec2bin(i);
-            buff += string(8-dec2bin(codes[i].size()).size(),'0')+dec2bin(codes[i].size());
+            buff += dec2bin(i);
+            buff += dec2bin(codes[i].size());
             buff+=codes[i];
             t+=1;
         }
-    buff = string(8-dec2bin(t).size(),'0')+dec2bin(t)+buff;
+    buff = dec2bin(t)+buff;
 
     unsigned char next = 0;
     while (buff.size()>=8)
@@ -137,8 +144,7 @@ string ShF(string filename)
             out_file.write((char *)&next,sizeof(next));
         }
     }
-
-    if (buff.size()>0) buff += string(8-buff.size(),'0');
+    while (buff.size()<8) buff +='0';
     next = bin2dec(buff.substr(0,8));
     buff.erase(0,8);
     out_file.write((char *)&next,sizeof(next));
@@ -149,14 +155,55 @@ string ShF(string filename)
     start = clock();
 
     /// раскодирование для замера =================================================================
+
     ifstream bin_file("..\\tests\\ShF_out\\"+filename+".min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3;;";
 
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();
     bin_file.seekg(0, ios_base::beg);
+
+    unsigned char bytes[res_size];
+    bin_file.read((char*)&len,sizeof(len));
+    bin_file.read((char*)bytes, res_size);
+    map<string,char> keys;
+    str = "";
+    int pointer = 0;
+
+    unsigned char symb_num = bytes[pointer++];
+
+    for (int i = 0; i < symb_num; i++)
+    {
+        while (str.size() < 16) str += dec2bin(bytes[pointer++]);
+        unsigned char cur = bin2dec(str.substr(0,8));
+        str.erase(0,8);
+        unsigned char code_len = bin2dec(str.substr(0,8));
+        str.erase(0,8);
+        while (str.size()<code_len) str += dec2bin(bytes[pointer++]);
+
+
+        keys[str.substr(0,code_len)]=cur;
+        str.erase(0,code_len);
+    }
+
+    string res = "";
+    int code_len = 1;
+    for (int i =0; i<len; i++)
+    {
+        while (str.size()<256 && pointer < res_size) str += dec2bin(bytes[pointer++]);
+        while (keys.count(str.substr(0,code_len)) == 0 && code_len<str.size()) code_len++;
+        if (keys.count(str.substr(0,code_len)) == 0) break;
+        res+=keys[str.substr(0,code_len)];
+        str.erase(0,code_len);
+        code_len=1;
+    }
+    out = res;
+
+    bin_file.close();
     // раскодирование для замера ==================================================================
     result += ";" + to_string((float)(clock()-start)/1000);
     result+=";"+to_string((float)src_size/res_size);
+    result+=((in==out) ? ";OK" : ";ERR");
+
     return result;
 }
