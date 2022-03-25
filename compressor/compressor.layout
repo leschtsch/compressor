@@ -2,47 +2,51 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1539" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="RLE.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2803" topLine="59" />
+			<Cursor1 position="2958" topLine="59" />
 		</Cursor>
 	</File>
-	<File name="BWT.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Huffman.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1245" topLine="31" />
+			<Cursor1 position="1295" topLine="41" />
 		</Cursor>
 	</File>
-	<File name="algorithms.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="algorithms.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="268" topLine="0" />
+			<Cursor1 position="303" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="ShannonFano.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="BWT_MTF.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2877" topLine="56" />
+			<Cursor1 position="4286" topLine="135" />
+		</Cursor>
+	</File>
+	<File name="ShannonFano.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3095" topLine="58" />
 		</Cursor>
 		<Folding>
 			<Collapse line="11" />
 			<Collapse line="22" />
 			<Collapse line="38" />
 			<Collapse line="51" />
-			<Collapse line="169" />
-			<Collapse line="185" />
+			<Collapse line="175" />
 		</Folding>
 	</File>
-	<File name="MTF.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="MTF.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3211" topLine="88" />
+			<Cursor1 position="591" topLine="18" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="BWT.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1226" topLine="26" />
-		</Cursor>
-	</File>
-	<File name="BWT_MTF.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2057" topLine="70" />
+			<Cursor1 position="4293" topLine="105" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
