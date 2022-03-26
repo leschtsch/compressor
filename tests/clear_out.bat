@@ -10,3 +10,7 @@ rmdir /S /Q BWT_MTF_out
 mkdir BWT_MTF_out
 rmdir /S /Q ShF_out
 mkdir ShF_out
+rmdir /S /Q Huff_out
+mkdir Huff_out
+rmdir /S /Q LZ78_out
+mkdir LZ78_out

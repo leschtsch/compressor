@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1648204024 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+1648303926 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
 	<iostream>
 	<windows.h>
 	<fstream>
@@ -8,14 +8,14 @@
 1643890995 c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.h
 	<string>
 
-1648144386 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
+1648310681 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.cpp
 	<string>
 	<fstream>
 	<iostream>
 	<ctime>
 	"algorithms.h"
 
-1648203997 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
+1648301517 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
 	<string>
 
 1648144520 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt.cpp
@@ -51,7 +51,7 @@
 	<map>
 	"algorithms.h"
 
-1648214665 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\huffman.cpp
+1648304050 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\huffman.cpp
 	<string>
 	<fstream>
 	<iostream>
@@ -59,5 +59,13 @@
 	<algorithm>
 	<map>
 	<set>
+	"algorithms.h"
+
+1648311560 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz78.cpp
+	<string>
+	<fstream>
+	<iostream>
+	<ctime>
+	<map>
 	"algorithms.h"
 

@@ -103,7 +103,7 @@ string Huff(string filename)
     get_freq(str);
     get_code();
 
-    ofstream out_file("..\\tests\\ShF_out\\"+filename+".min",
+    ofstream out_file("..\\tests\\Huff_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
     if (!out_file.is_open()) return "FAIL2;;";
 
@@ -150,7 +150,7 @@ string Huff(string filename)
 
     /// раскодирование для замера =================================================================
 
-    ifstream bin_file("..\\tests\\ShF_out\\"+filename+".min", ios_base::binary);
+    ifstream bin_file("..\\tests\\Huff_out\\"+filename+".min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3;;";
 
     bin_file.seekg(0, ios_base::end);

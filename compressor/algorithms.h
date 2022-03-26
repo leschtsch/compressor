@@ -8,4 +8,5 @@ std::string mtf(std::string filename);
 std::string bwt_mtf(std::string filename);
 std::string ShF(std::string filename);
 std::string Huff(std::string filename);
+std::string lz78(std::string filename);
 #endif // ALGORITHMS_H_INCLUDED
