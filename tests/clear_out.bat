@@ -14,3 +14,5 @@ rmdir /S /Q Huff_out
 mkdir Huff_out
 rmdir /S /Q LZ78_out
 mkdir LZ78_out
+rmdir /S /Q LZ77_out
+mkdir LZ77_out

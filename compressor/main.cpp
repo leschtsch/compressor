@@ -48,8 +48,12 @@ int main()
         cout << "Huff:" << "\t\t" << res << endl;
 
         res = lz78(filename);
-        result <<  res << "" << endl;
+        result <<  res << ";;";
         cout << "LZ78:" << "\t\t" << res << endl;
+
+        res = lz77(filename);
+        result <<  res << "" << endl;
+        cout << "LZ77:" << "\t\t" << res << endl;
 
         cout << endl;
     }

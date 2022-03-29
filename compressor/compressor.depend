@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1648303926 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+1648582293 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
 	<iostream>
 	<windows.h>
 	<fstream>
@@ -15,7 +15,7 @@
 	<ctime>
 	"algorithms.h"
 
-1648301517 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
+1648397511 c:\users\ПК\desktop\проги\проект 10.2\compressor\algorithms.h
 	<string>
 
 1648144520 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\bwt.cpp
@@ -61,11 +61,18 @@
 	<set>
 	"algorithms.h"
 
-1648311560 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz78.cpp
+1648580944 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz78.cpp
 	<string>
 	<fstream>
 	<iostream>
 	<ctime>
 	<map>
+	"algorithms.h"
+
+1648581397 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz77.cpp
+	<string>
+	<fstream>
+	<iostream>
+	<ctime>
 	"algorithms.h"
 

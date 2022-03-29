@@ -26,7 +26,6 @@ string lz78(string filename)
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
     in = str;
-    str += (char)0;
 
     in_file.close();
     // ввод =======================================================================================
@@ -84,7 +83,7 @@ string lz78(string filename)
         reverse_dict[ds++] = reverse_dict[n1]+n2;
         str+=reverse_dict[n1]+n2;
     }
-    str.erase(str.size()-1,1);
+    if (str[str.size()-1]==0) str.erase(str.size()-1,1);
     out = str;
     // раскодирование для замера ==================================================================
 

@@ -35,6 +35,8 @@
 		<Unit filename="BWT.cpp" />
 		<Unit filename="BWT_MTF.cpp" />
 		<Unit filename="Huffman.cpp" />
+		<Unit filename="LZ77.cpp" />
+		<Unit filename="LZ78.cpp" />
 		<Unit filename="MTF.cpp" />
 		<Unit filename="RLE.cpp" />
 		<Unit filename="ShannonFano.cpp" />
