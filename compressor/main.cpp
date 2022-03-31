@@ -7,7 +7,7 @@ int main()
 {
     ofstream result("..\\tests\\result.csv");
     if (!result.is_open()) return -1;
-    result << ";;RLE;;;;;BWT-RLE;;;;;MTF;;;;;BWT_MTF;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78" << endl;
+    result << ";;RLE;;;;;BWT-RLE;;;;;MTF;;;;;BWT_MTF;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78;;;;;LZ77" << endl;
     string filename, res;
 
     WIN32_FIND_DATA FindFileData;

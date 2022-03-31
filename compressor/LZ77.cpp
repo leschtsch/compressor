@@ -10,7 +10,8 @@ using namespace std;
 static pair<int, int> get_code(string buff, string str)
 {
     pair<int,int> res = {0,0};
-    for (int i = 0; i < buff.size(); i++)
+    int i = 0;
+    while(i<buff.size())
     {
         string temp_buff = buff.substr(i,buff.size()-i);
         int str_pos = 0;
@@ -21,6 +22,8 @@ static pair<int, int> get_code(string buff, string str)
             temp_buff.erase(0,1);
         }
         if (str_pos>res.second)res = {buff.size()-i,str_pos};
+        //if (buff.size()-i<res.second) return res;
+        i+=str_pos+1;
     }
     return res;
 }
