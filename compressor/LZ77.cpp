@@ -61,7 +61,7 @@ string lz77(string filename)
     while (str.size()>0)
     {
         buff.erase(0,max((int) buff.size()-4095,0));
-        pair<unsigned int,unsigned int> code = get_code(buff,str);
+        pair<unsigned int,unsigned int> code = get_code(buff,str.substr(0,4096));
         buff += str.substr(0,code.second);
         str.erase(0,code.second);
         char next = str[0];

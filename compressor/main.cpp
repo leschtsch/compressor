@@ -8,8 +8,16 @@ int main()
     ofstream result("..\\tests\\result.csv");
     if (!result.is_open()) return -1;
     result << ";;RLE;;;;;BWT-RLE;;;;;MTF;;;;;BWT_MTF;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78;;;;;LZ77" << endl;
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res";
+    result << ";;t ñæ;t ğàçæ;k;res" << endl << endl;
     string filename, res;
-
+    string buff = "";
     WIN32_FIND_DATA FindFileData;
     HANDLE hf;
     hf=FindFirstFile("..\\tests\\input\\*.txt", &FindFileData);
@@ -21,41 +29,42 @@ int main()
 
         filename.erase(filename.length()-4,4); // ñòåğåòü .txt
         result << filename << ";;";
-        cout << filename << ":" << endl;
+        buff += filename + ":\n";
 
         res = rle(filename);
         result << res << ";;";
-        cout << "RLE:" << "\t\t" << res << endl;
+        buff+="RLE:\t\t" + res+"\n";
 
         res = bwt(filename);
         result <<  res << ";;";
-        cout << "BWT:" << "\t\t" << res << endl;
+        buff+="BWT:\t\t" + res+"\n";
 
         res = mtf(filename);
         result <<  res << ";;";
-        cout << "MTF:" << "\t\t" << res << endl;
+        buff+="MTF:\t\t" + res+"\n";
 
         res = bwt_mtf(filename);
         result <<  res << ";;";
-        cout << "BWT_MTF:" << "\t" << res << endl;
+        buff+="BWT_MTF:\t" + res+"\n";
 
         res = ShF(filename);
         result <<  res << ";;";
-        cout << "Shannon_Fano:" << "\t" << res << endl;
+        buff+="Shannon_Fano:\t" + res+"\n";
 
         res = Huff(filename);
         result <<  res << ";;";
-        cout << "Huff:" << "\t\t" << res << endl;
+        buff+="Huff:\t\t" + res+"\n";
 
         res = lz78(filename);
         result <<  res << ";;";
-        cout << "LZ78:" << "\t\t" << res << endl;
+        buff+="LZ78:\t\t" + res+"\n";
 
         res = lz77(filename);
         result <<  res << "" << endl;
-        cout << "LZ77:" << "\t\t" << res << endl;
+        buff+="LZ77:\t\t" + res+"\n";
 
-        cout << endl;
+        cout << buff<< endl;
+        buff="";
     }
     while (FindNextFile(hf,&FindFileData)!=0);
 

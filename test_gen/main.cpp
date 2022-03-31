@@ -229,7 +229,7 @@ int main()
 {
     srand((int)(time(0)*1000));
     one_symbol(5);
-    random_test(5);
+    random_test(3);
     for (int i = 1; i <= 10; i++) grouped_symbols(3,i*10);
     sequence(3,10);
     sequence(3,100);
