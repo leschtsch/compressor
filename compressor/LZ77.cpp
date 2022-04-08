@@ -13,13 +13,11 @@ static pair<int, int> get_code(string buff, string str)
     int i = 0;
     while(i<buff.size())
     {
-        string temp_buff = buff.substr(i,buff.size()-i);
         int str_pos = 0;
-        while (str_pos < str.size() && str_pos<4095 && temp_buff[0]==str[str_pos])
+        int mod = buff.size()-i;
+        while (str_pos < str.size() && str_pos<4095 && buff[i+str_pos%mod]==str[str_pos])
         {
             str_pos+=1;
-            temp_buff+=temp_buff[0];
-            temp_buff.erase(0,1);
         }
         if (str_pos>res.second)res = {buff.size()-i,str_pos};
         //if (buff.size()-i<res.second) return res;
@@ -35,8 +33,8 @@ string lz77(string filename)
     float start = clock();
 
     /// ввод ======================================================================================
-    ifstream in_file("..\\tests\\input\\"+filename+".txt");
-    if (!in_file.is_open()) return "FAIL1;;";
+    ifstream in_file("..\\tests\\input\\"+filename,ios_base::binary);
+    if (!in_file.is_open()) return "FAIL1;;;";
 
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
@@ -55,16 +53,17 @@ string lz77(string filename)
     /// вывод =====================================================================================
     ofstream out_file("..\\tests\\LZ77_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
-    if (!out_file.is_open()) return "FAIL2;;";
+    if (!out_file.is_open()) return "FAIL2;;;";
 
     string buff = "";
+    int prev = 0;
     while (str.size()>0)
     {
         buff.erase(0,max((int) buff.size()-4095,0));
         pair<unsigned int,unsigned int> code = get_code(buff,str.substr(0,4096));
         buff += str.substr(0,code.second);
         str.erase(0,code.second);
-        char next = str[0];
+        unsigned char next = str[0];
         buff += next;
         str.erase(0,1);
 
@@ -82,7 +81,7 @@ string lz77(string filename)
 
     /// раскодирование для замера =================================================================
     ifstream bin_file("..\\tests\\LZ77_out\\"+filename+".min", ios_base::binary);
-    if (!bin_file.is_open()) return "FAIL3;;";
+    if (!bin_file.is_open()) return "FAIL3;;;";
 
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();

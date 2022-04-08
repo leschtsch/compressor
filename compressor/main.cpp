@@ -8,26 +8,26 @@ int main()
     ofstream result("..\\tests\\result.csv");
     if (!result.is_open()) return -1;
     result << ";;RLE;;;;;BWT-RLE;;;;;MTF;;;;;BWT_MTF;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78;;;;;LZ77" << endl;
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res";
-    result << ";;t ñæ;t ğàçæ;k;res" << endl << endl;
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res";
+    result << ";;t ÑĞ¶;t Ñ€Ğ°ÑĞ¶;k;res" << endl << endl;
     string filename, res;
     string buff = "";
     WIN32_FIND_DATA FindFileData;
     HANDLE hf;
-    hf=FindFirstFile("..\\tests\\input\\*.txt", &FindFileData);
+    hf=FindFirstFile("..\\tests\\input\\*.*", &FindFileData);
     if (hf==INVALID_HANDLE_VALUE) return -1;
 
     do
     {
         filename = FindFileData.cFileName;
+        if (filename == "." or filename == "..") continue;
 
-        filename.erase(filename.length()-4,4); // ñòåğåòü .txt
         result << filename << ";;";
         buff += filename + ":\n";
 
@@ -35,7 +35,7 @@ int main()
         result << res << ";;";
         buff+="RLE:\t\t" + res+"\n";
 
-        res = bwt(filename);
+        res = bwt(filename); //ÑÑ‚Ğ¾
         result <<  res << ";;";
         buff+="BWT:\t\t" + res+"\n";
 
@@ -43,15 +43,16 @@ int main()
         result <<  res << ";;";
         buff+="MTF:\t\t" + res+"\n";
 
-        res = bwt_mtf(filename);
+        res = bwt_mtf(filename); // ÑÑ‚Ğ¾
         result <<  res << ";;";
         buff+="BWT_MTF:\t" + res+"\n";
 
-        res = ShF(filename);
+
+        res = ShF(filename); // ÑÑ‚Ğ¾
         result <<  res << ";;";
         buff+="Shannon_Fano:\t" + res+"\n";
 
-        res = Huff(filename);
+        res = Huff(filename); // ÑÑ‚Ğ¾
         result <<  res << ";;";
         buff+="Huff:\t\t" + res+"\n";
 
@@ -59,12 +60,13 @@ int main()
         result <<  res << ";;";
         buff+="LZ78:\t\t" + res+"\n";
 
-        res = lz77(filename);
+        res = lz77(filename); // ÑÑ‚Ğ¾
         result <<  res << "" << endl;
         buff+="LZ77:\t\t" + res+"\n";
 
         cout << buff<< endl;
         buff="";
+
     }
     while (FindNextFile(hf,&FindFileData)!=0);
 

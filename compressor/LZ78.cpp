@@ -14,8 +14,8 @@ string lz78(string filename)
     float start = clock();
 
     /// ввод ======================================================================================
-    ifstream in_file("..\\tests\\input\\"+filename+".txt");
-    if (!in_file.is_open()) return "FAIL1;;";
+    ifstream in_file("..\\tests\\input\\"+filename,ios_base::binary);
+    if (!in_file.is_open()) return "FAIL1;;;";
 
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
@@ -33,7 +33,7 @@ string lz78(string filename)
     /// вывод =====================================================================================
     ofstream out_file("..\\tests\\LZ78_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
-    if (!out_file.is_open()) return "FAIL2;;";
+    if (!out_file.is_open()) return "FAIL2;;;";
 
     map<string, unsigned short> dict;
     unsigned short ds = 0;
@@ -53,6 +53,13 @@ string lz78(string filename)
         char n2 = buff[buff.size()-1];
         out_file.write((char*)&n2,sizeof(n2));
         buff = "";
+        if (dict.size()>65000)
+        {
+            while (dict.size()>0) dict.erase(dict.begin());
+            ds = 0;
+            dict[""] = ds++;
+            buff = "";
+        }
     }
     out_file.close();
     // вывод ======================================================================================
@@ -63,7 +70,7 @@ string lz78(string filename)
     /// раскодирование для замера =================================================================
 
     ifstream bin_file("..\\tests\\LZ78_out\\"+filename+".min", ios_base::binary);
-    if (!bin_file.is_open()) return "FAIL3;;";
+    if (!bin_file.is_open()) return "FAIL3;;;";
 
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();
@@ -82,6 +89,12 @@ string lz78(string filename)
         bin_file.read((char*)&n2, sizeof(n2));
         reverse_dict[ds++] = reverse_dict[n1]+n2;
         str+=reverse_dict[n1]+n2;
+        if (reverse_dict.size()>65000)
+        {
+            while (reverse_dict.size()>0) reverse_dict.erase(reverse_dict.begin());
+            ds = 0;
+            reverse_dict[ds++] = "";
+        }
     }
     if (str[str.size()-1]==0) str.erase(str.size()-1,1);
     out = str;

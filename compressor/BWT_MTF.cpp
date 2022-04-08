@@ -8,23 +8,23 @@
 using namespace std;
 
 
-static char alphabet[256];
+static unsigned char alphabet[256];
 static int BLOCK_SIZE = 1024;
 static char EOL = (char) 0;
 
 
-static char mtf_direct(char letter)
+static unsigned char mtf_direct(unsigned char letter)
 {
-    char ind = 0;
-    while (alphabet[int(ind)]!=letter) ind++;
+    unsigned char ind = 0;
+    while (alphabet[(int)ind]!=letter) ind++;
     for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
     alphabet[0] = letter;
     return ind;
 }
 
-static char mtf_reverse(char ind)
+static unsigned char mtf_reverse(unsigned char ind)
 {
-    char letter = alphabet[int(ind)];
+    unsigned char letter = alphabet[int(ind)];
     for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
     alphabet[0] = letter;
     return letter;
@@ -44,11 +44,11 @@ static string bwt_direct(string s)
 
 static string bwt_reverse1(string s)
 {
-    pair<char, int> last_col[s.size()];
+    pair<unsigned char, int> last_col[s.size()];
     int ind;
     for (unsigned int i = 0; i < s.size(); i++)
     {
-        last_col[i] = pair<char,int> (s[i],i);
+        last_col[i] = pair<unsigned char,int> (s[i],i);
         if (s[i]==EOL) ind = i;
     }
     sort(last_col, last_col+s.size());
@@ -74,8 +74,8 @@ string bwt_mtf(string filename)
     float start = clock();
 
     /// ввод ======================================================================================
-    ifstream in_file("..\\tests\\input\\"+filename+".txt");
-    if (!in_file.is_open()) return "FAIL1;;";
+    ifstream in_file("..\\tests\\input\\"+filename,ios_base::binary);
+    if (!in_file.is_open()) return "FAIL1;;;";
 
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
@@ -98,7 +98,7 @@ string bwt_mtf(string filename)
     /// вывод =====================================================================================
     ofstream out_file("..\\tests\\BWT_MTF_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
-    if (!out_file.is_open()) return "FAIL2;;";
+    if (!out_file.is_open()) return "FAIL2;;;";
 
     unsigned char counter = 0;
     unsigned char current = transformed[0];
@@ -134,7 +134,7 @@ string bwt_mtf(string filename)
 
     /// раскодирование для замера =================================================================
     ifstream bin_file("..\\tests\\BWT_MTF_out\\"+filename+".min", ios_base::binary);
-    if (!bin_file.is_open()) return "FAIL3;;";
+    if (!bin_file.is_open()) return "FAIL3;;;";
 
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();

@@ -36,18 +36,18 @@ static unsigned char bin2dec(string s)
     return n;
 }
 
-static pair<char,int> frequences[256]; // символ, частота
+static pair<unsigned char,int> frequences[256]; // символ, частота
 static string codes[256];
 
 static void get_freq(string s)
 {
-    for (char i : s) frequences[i].second++;
+    for (unsigned char i : s) frequences[i].second++;
 }
 
 static void get_code()
 {
     multiset<pair<int, string>> tree;
-    for (pair<char,int> i : frequences) if (i.second != 0) tree.insert(pair<int, string>(i.second, string(1,i.first)));
+    for (pair<unsigned char,int> i : frequences) if (i.second != 0) tree.insert(pair<int, string>(i.second, string(1,i.first)));
     if (tree.size()==1)
     {
         pair<int, string> letter = *tree.begin();
@@ -59,9 +59,9 @@ static void get_code()
     {
         pair<int, string> left = *tree.begin();
         tree.erase(tree.begin());
-        for (char i:left.second) codes[i]="0"+codes[i];
+        for (unsigned char i:left.second) codes[i]="0"+codes[i];
         pair<int, string> right = *tree.begin();
-        for (char i:right.second) codes[i]="1"+codes[i];
+        for (unsigned char i:right.second) codes[i]="1"+codes[i];
         tree.erase(tree.begin());
         pair<int, string> new_;
         new_.first=left.first+right.first;
@@ -73,7 +73,7 @@ static void get_code()
 
 string Huff(string filename)
 {
-    for (int i = 0; i < 256; i++) frequences[i]= {(char)i,0};
+    for (int i = 0; i < 256; i++) frequences[i]= {(unsigned char)i,0};
     for (int i = 0; i < 256; i++) codes[i]="";
 
     string in, out;
@@ -81,8 +81,8 @@ string Huff(string filename)
     float start = clock();
 
     /// ввод ======================================================================================
-    ifstream in_file("..\\tests\\input\\"+filename+".txt");
-    if (!in_file.is_open()) return "FAIL1;;";
+    ifstream in_file("..\\tests\\input\\"+filename,ios_base::binary);
+    if (!in_file.is_open()) return "FAIL1;;;";
 
     in_file.seekg(0, ios_base::end);
     int src_size = in_file.tellg();
@@ -102,10 +102,9 @@ string Huff(string filename)
 
     get_freq(str);
     get_code();
-
     ofstream out_file("..\\tests\\Huff_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
-    if (!out_file.is_open()) return "FAIL2;;";
+    if (!out_file.is_open()) return "FAIL2;;;";
 
 
     out_file.write((char*)&len, sizeof(len));
@@ -128,7 +127,7 @@ string Huff(string filename)
         out_file.write((char *)&next,sizeof(next));
     }
 
-    for (char i : str)
+    for (unsigned char i : str)
     {
         buff += codes[i];
         while (buff.size()>=8)
@@ -151,7 +150,7 @@ string Huff(string filename)
     /// раскодирование для замера =================================================================
 
     ifstream bin_file("..\\tests\\Huff_out\\"+filename+".min", ios_base::binary);
-    if (!bin_file.is_open()) return "FAIL3;;";
+    if (!bin_file.is_open()) return "FAIL3;;;";
 
     bin_file.seekg(0, ios_base::end);
     int res_size = bin_file.tellg();

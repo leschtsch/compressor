@@ -1,5 +1,6 @@
 rmdir /S /Q input
 mkdir input
+copy real input
 rmdir /S /Q RLE_out
 mkdir RLE_out
 rmdir /S /Q BWT_out
