@@ -106,8 +106,6 @@ string ShF(string filename)
     while (!frequences[i].second) i++;
     if (i == 255) get_code("0",255,255);
     else get_code("",i,255);
-
-
     ofstream out_file("..\\tests\\ShF_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
     if (!out_file.is_open()) return "FAIL2;;;";
@@ -124,7 +122,6 @@ string ShF(string filename)
             buff+=codes[i];
             t+=1;
         }
-
     buff = dec2bin(t)+buff;
 
     unsigned char next = 0;
@@ -134,7 +131,6 @@ string ShF(string filename)
         buff.erase(0,8);
         out_file.write((char *)&next,sizeof(next));
     }
-
     for (unsigned char i : str)
     {
         buff += codes[i];
@@ -171,7 +167,8 @@ string ShF(string filename)
     str = "";
     int pointer = 0;
 
-    unsigned char symb_num = bytes[pointer++];
+    unsigned int symb_num = bytes[pointer++];
+    symb_num = (symb_num==0)?256:symb_num;
     for (int i = 0; i < symb_num; i++)
     {
         while (str.size() < 16) str += dec2bin(bytes[pointer++]);
@@ -180,12 +177,9 @@ string ShF(string filename)
         unsigned char code_len = bin2dec(str.substr(0,8));
         str.erase(0,8);
         while (str.size()<code_len) str += dec2bin(bytes[pointer++]);
-
-
         keys[str.substr(0,code_len)]=cur;
         str.erase(0,code_len);
     }
-
     string res = "";
     int code_len = 1;
     for (int i =0; i<len; i++)

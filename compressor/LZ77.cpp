@@ -44,9 +44,9 @@ string lz77(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
+    int len = str.size();
+
     in = str;
-
-
     in_file.close();
     // ввод =======================================================================================
 
@@ -57,6 +57,8 @@ string lz77(string filename)
 
     string buff = "";
     int prev = 0;
+
+    out_file.write((char*)&len, sizeof(len));
     while (str.size()>0)
     {
         buff.erase(0,max((int) buff.size()-4095,0));
@@ -89,6 +91,8 @@ string lz77(string filename)
 
     buff = "";
     str = "";
+
+    bin_file.read((char*)&len, sizeof(len));
     for (int i = 0; i < res_size; i+=4)
     {
         unsigned short a;
@@ -103,7 +107,6 @@ string lz77(string filename)
         code.second = a;
         code.second = (code.second << 28) >> 20;
         code.second+=b;
-
         code.first = buff.size()-code.first;
         for (int i = 0; i < code.second; i++)
         {
@@ -112,9 +115,9 @@ string lz77(string filename)
         }
         str+=next;
         buff += next;
-        buff.erase(0,max((int) buff.size()-4095,0));
     }
-    if (str[str.size()-1]==0) str.erase(str.size()-1,1);
+    str=str.substr(0,len);
+
     out = str;
     // раскодирование для замера ==================================================================
     result += ";" + to_string((float)(clock()-start)/1000);

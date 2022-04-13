@@ -22,7 +22,7 @@ static unsigned char mtf_direct(unsigned char letter)
 
 static unsigned char mtf_reverse(unsigned char ind)
 {
-    unsigned char letter = alphabet[int(ind)];
+    unsigned char letter = alphabet[(int)ind];
     for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
     alphabet[0] = letter;
     return letter;

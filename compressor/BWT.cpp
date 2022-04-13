@@ -14,34 +14,35 @@ static char EOL = (char) 0;
 
 static string bwt_direct(string s)
 {
-    s += EOL;
-    string matrix[s.size()];
-    for (unsigned int i =0; i < s.size(); i++) matrix[i] = s.substr(i,s.size()-i)+s.substr(0,i);
+    pair<string,int> matrix[s.size()];
+    for (unsigned int i =0; i < s.size(); i++) matrix[i] = {s.substr(i,s.size()-i)+s.substr(0,i),0};
+    matrix[0].second = 1;
     sort(matrix,matrix+s.size());
     string res = "";
-    for (unsigned int i =0; i < s.size(); i++) res+=matrix[i][s.size()-1];
-    return res;
-}
+    unsigned short ind = 0;
 
+    for (unsigned int i =0; i < s.size(); i++)
+    {
+        res+=matrix[i].first[s.size()-1];
+        ind = (matrix[i].second == 1)?i:ind;
+    }
+    return string(1,(unsigned char)(ind>>8))+string(1,(unsigned char)(ind))+res;
+}
 
 static string bwt_reverse(string s)
 {
+    unsigned short ind = ((unsigned short)(unsigned char)s[0]<<8)+(unsigned short)(unsigned char)s[1];
+    s.erase(0,2);
     pair<unsigned char, int> last_col[s.size()];
-    int ind;
     for (unsigned int i = 0; i < s.size(); i++)
     {
         last_col[i] = pair<unsigned char,int> (s[i],i);
-        if (s[i]==EOL)
-        {
-            ind = i;
-        }
     }
     sort(last_col, last_col+s.size());
     int translations[s.size()];
     for (unsigned int i = 0; i < s.size(); i++) translations[last_col[i].second] = i;
-    ind = translations[ind];
     string res = "";
-    for (unsigned int i=0; i<s.size()-1; i++)
+    for (unsigned int i=0; i<s.size(); i++)
     {
         res=s[ind]+res;
         ind = translations[ind];
@@ -69,7 +70,6 @@ string bwt(string filename)
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
     in = str;
-
     for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE) transformed+=bwt_direct(str.substr(i,BLOCK_SIZE));
     //ввод ========================================================================================
 
@@ -106,7 +106,6 @@ string bwt(string filename)
 
     result += to_string((float)(clock()-start)/1000);
     start = clock();
-
     /// раскодирование для замера =================================================================
     ifstream bin_file("..\\tests\\BWT_out\\"+filename+".min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3;;;";
@@ -117,12 +116,10 @@ string bwt(string filename)
 
     unsigned char bytes[res_size];
     bin_file.read((char*)bytes, res_size);
-
     str="";
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
-
     transformed="";
-    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+1) transformed+=bwt_reverse(str.substr(i,BLOCK_SIZE+1));
+    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+2) transformed+=bwt_reverse(str.substr(i,BLOCK_SIZE+2));
     out = transformed;
     bin_file.close();
     // раскодирование для замера ==================================================================

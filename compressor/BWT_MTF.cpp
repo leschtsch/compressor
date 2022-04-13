@@ -10,6 +10,7 @@ using namespace std;
 
 static unsigned char alphabet[256];
 static int BLOCK_SIZE = 1024;
+
 static char EOL = (char) 0;
 
 
@@ -24,7 +25,7 @@ static unsigned char mtf_direct(unsigned char letter)
 
 static unsigned char mtf_reverse(unsigned char ind)
 {
-    unsigned char letter = alphabet[int(ind)];
+    unsigned char letter = alphabet[(int)ind];
     for (int i = ind; i>0; i--) alphabet[i]=alphabet[i-1];
     alphabet[0] = letter;
     return letter;
@@ -32,31 +33,35 @@ static unsigned char mtf_reverse(unsigned char ind)
 
 static string bwt_direct(string s)
 {
-    s += EOL;
-    string matrix[s.size()];
-    for (unsigned int i =0; i < s.size(); i++) matrix[i] = s.substr(i,s.size()-i)+s.substr(0,i);
+    pair<string,int> matrix[s.size()];
+    for (unsigned int i =0; i < s.size(); i++) matrix[i] = {s.substr(i,s.size()-i)+s.substr(0,i),0};
+    matrix[0].second = 1;
     sort(matrix,matrix+s.size());
     string res = "";
-    for (unsigned int i =0; i < s.size(); i++) res+=matrix[i][s.size()-1];
-    return res;
+    unsigned short ind = 0;
+
+    for (unsigned int i =0; i < s.size(); i++)
+    {
+        res+=matrix[i].first[s.size()-1];
+        ind = (matrix[i].second == 1)?i:ind;
+    }
+    return string(1,(unsigned char)(ind>>8))+string(1,(unsigned char)(ind))+res;
 }
 
-
-static string bwt_reverse1(string s)
+static string bwt_reverse(string s)
 {
+    unsigned short ind = ((unsigned short)(unsigned char)s[0]<<8)+(unsigned short)(unsigned char)s[1];
+    s.erase(0,2);
     pair<unsigned char, int> last_col[s.size()];
-    int ind;
     for (unsigned int i = 0; i < s.size(); i++)
     {
         last_col[i] = pair<unsigned char,int> (s[i],i);
-        if (s[i]==EOL) ind = i;
     }
     sort(last_col, last_col+s.size());
     int translations[s.size()];
     for (unsigned int i = 0; i < s.size(); i++) translations[last_col[i].second] = i;
-    ind = translations[ind];
     string res = "";
-    for (unsigned int i=0; i<s.size()-1; i++)
+    for (unsigned int i=0; i<s.size(); i++)
     {
         res=s[ind]+res;
         ind = translations[ind];
@@ -94,7 +99,6 @@ string bwt_mtf(string filename)
 
     in_file.close();
     // ввод =======================================================================================
-
     /// вывод =====================================================================================
     ofstream out_file("..\\tests\\BWT_MTF_out\\"+filename+".min",
                       ios_base::out | ios_base::trunc|ios_base::binary);
@@ -131,7 +135,6 @@ string bwt_mtf(string filename)
     for (int i = 0; i<256; i++) alphabet[i]=(char)i;
 
     start = clock();
-
     /// раскодирование для замера =================================================================
     ifstream bin_file("..\\tests\\BWT_MTF_out\\"+filename+".min", ios_base::binary);
     if (!bin_file.is_open()) return "FAIL3;;;";
@@ -146,12 +149,10 @@ string bwt_mtf(string filename)
     str="";
     transformed = "";
     for (int i = 0; i < res_size; i+=2) str += string(bytes[i],bytes[i+1]);
-
     for (unsigned int i=0; i < str.size(); i++) transformed += mtf_reverse(str[i]);
     str=transformed;
     transformed = "";
-    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+1) transformed+=bwt_reverse1(str.substr(i,BLOCK_SIZE+1));
-
+    for (unsigned int i = 0; i<str.size(); i+=BLOCK_SIZE+2) transformed+=bwt_reverse(str.substr(i,BLOCK_SIZE+2));
     out = transformed;
     bin_file.close();
     // раскодирование для замера ==================================================================

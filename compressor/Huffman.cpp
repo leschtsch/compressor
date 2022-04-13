@@ -163,8 +163,8 @@ string Huff(string filename)
     str = "";
     int pointer = 0;
 
-    unsigned char symb_num = bytes[pointer++];
-
+    unsigned int symb_num = bytes[pointer++];
+    symb_num = (symb_num==0)?256:symb_num;
     for (int i = 0; i < symb_num; i++)
     {
         while (str.size() < 16) str += dec2bin(bytes[pointer++]);
@@ -173,19 +173,15 @@ string Huff(string filename)
         unsigned char code_len = bin2dec(str.substr(0,8));
         str.erase(0,8);
         while (str.size()<code_len) str += dec2bin(bytes[pointer++]);
-
-
         keys[str.substr(0,code_len)]=cur;
         str.erase(0,code_len);
     }
-
     string res = "";
     int code_len = 1;
     for (int i =0; i<len; i++)
     {
         while (str.size()<256 && pointer < res_size) str += dec2bin(bytes[pointer++]);
         while (keys.count(str.substr(0,code_len)) == 0 && code_len<str.size()) code_len++;
-        if (keys.count(str.substr(0,code_len)) == 0) break;
         res+=keys[str.substr(0,code_len)];
         str.erase(0,code_len);
         code_len=1;

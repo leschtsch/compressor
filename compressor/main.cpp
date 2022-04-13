@@ -35,7 +35,7 @@ int main()
         result << res << ";;";
         buff+="RLE:\t\t" + res+"\n";
 
-        res = bwt(filename); //это
+        res = bwt(filename);
         result <<  res << ";;";
         buff+="BWT:\t\t" + res+"\n";
 
@@ -43,7 +43,7 @@ int main()
         result <<  res << ";;";
         buff+="MTF:\t\t" + res+"\n";
 
-        res = bwt_mtf(filename); // это
+        res = bwt_mtf(filename);
         result <<  res << ";;";
         buff+="BWT_MTF:\t" + res+"\n";
 
@@ -56,11 +56,11 @@ int main()
         result <<  res << ";;";
         buff+="Huff:\t\t" + res+"\n";
 
-        res = lz78(filename);
+        res = lz78(filename); // это
         result <<  res << ";;";
         buff+="LZ78:\t\t" + res+"\n";
 
-        res = lz77(filename); // это
+        res = lz77(filename);
         result <<  res << "" << endl;
         buff+="LZ77:\t\t" + res+"\n";
 
@@ -73,6 +73,7 @@ int main()
     result.close();
     FindClose(hf);
 
+    cout << "\a";
     system("pause");
     return 0;
 }

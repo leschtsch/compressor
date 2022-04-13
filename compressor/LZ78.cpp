@@ -25,8 +25,9 @@ string lz78(string filename)
     string str = "";
     while (getline(in_file, line)) str+=line+"\n";
     str.erase(str.length()-1,1);
-    in = str;
+    int len = str.size();
 
+    in = str;
     in_file.close();
     // ввод =======================================================================================
 
@@ -40,6 +41,7 @@ string lz78(string filename)
     dict[""] = ds++;
     string buff = "";
 
+    out_file.write((char*)&len, sizeof(len));
     while (str.size() > 0)
     {
         while (str.size() > 0 && dict.count(buff)>0)
@@ -81,6 +83,7 @@ string lz78(string filename)
     reverse_dict[ds++]="";
     str = "";
 
+    bin_file.read((char*)&len, sizeof(len));
     for (int i =0; i<res_size; i+=3)
     {
         unsigned short n1;
@@ -96,7 +99,8 @@ string lz78(string filename)
             reverse_dict[ds++] = "";
         }
     }
-    if (str[str.size()-1]==0) str.erase(str.size()-1,1);
+    str=str.substr(0,len);
+
     out = str;
     // раскодирование для замера ==================================================================
 
