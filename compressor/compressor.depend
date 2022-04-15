@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1649880936 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
+1649944830 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\main.cpp
 	<iostream>
 	<windows.h>
 	<fstream>
+	<ctime>
 	"algorithms.h"
 
 1643890995 c:\users\ПК\desktop\проги\проект 10.2\compressor\rle.h
@@ -61,7 +62,7 @@
 	<set>
 	"algorithms.h"
 
-1649878622 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz78.cpp
+1649946266 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz78.cpp
 	<string>
 	<fstream>
 	<iostream>
@@ -69,7 +70,7 @@
 	<map>
 	"algorithms.h"
 
-1649878603 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz77.cpp
+1649946282 source:c:\users\ПК\desktop\проги\проект 10.2\compressor\lz77.cpp
 	<string>
 	<fstream>
 	<iostream>

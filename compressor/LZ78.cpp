@@ -99,7 +99,7 @@ string lz78(string filename)
             reverse_dict[ds++] = "";
         }
     }
-    str=str.substr(0,len);
+    str.resize(len);
 
     out = str;
     // раскодирование для замера ==================================================================

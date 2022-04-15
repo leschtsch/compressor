@@ -6,6 +6,7 @@
 
 
 using namespace std;
+int pointer = 0;
 
 static pair<int, int> get_code(string buff, string str)
 {
@@ -30,6 +31,7 @@ string lz77(string filename)
 {
     string in, out;
     string result = "";
+    pointer = 0;
     float start = clock();
 
     /// ввод ======================================================================================
@@ -56,19 +58,15 @@ string lz77(string filename)
     if (!out_file.is_open()) return "FAIL2;;;";
 
     string buff = "";
-    int prev = 0;
-
     out_file.write((char*)&len, sizeof(len));
-    while (str.size()>0)
+    while (pointer < str.size())
     {
         buff.erase(0,max((int) buff.size()-4095,0));
-        pair<unsigned int,unsigned int> code = get_code(buff,str.substr(0,4096));
-        buff += str.substr(0,code.second);
-        str.erase(0,code.second);
-        unsigned char next = str[0];
+        pair<unsigned int,unsigned int> code = get_code(buff,str.substr(pointer,pointer+4096));
+        buff += str.substr(pointer,code.second);
+        pointer+=code.second;
+        unsigned char next = str[pointer++];
         buff += next;
-        str.erase(0,1);
-
         unsigned short a = (code.first << 4) + (code.second >> 8);
         unsigned char b = (unsigned char)code.second;
         out_file.write((char*)&a, sizeof(a));
@@ -116,7 +114,7 @@ string lz77(string filename)
         str+=next;
         buff += next;
     }
-    str=str.substr(0,len);
+    str.resize(len);
 
     out = str;
     // раскодирование для замера ==================================================================

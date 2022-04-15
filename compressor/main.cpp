@@ -1,13 +1,18 @@
 #include <iostream>
 #include <windows.h>
 #include <fstream>
+#include <ctime>
 #include "algorithms.h"
+
 using namespace std;
+
 int main()
 {
+    float start = clock();
+
     ofstream result("..\\tests\\result.csv");
     if (!result.is_open()) return -1;
-    result << ";;RLE;;;;;BWT-RLE;;;;;MTF;;;;;BWT_MTF;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78;;;;;LZ77" << endl;
+    result << ";;RLE;;;;;BWT-RLE;;;;;MTF-RLE;;;;;BWT-MTF-RLE;;;;;Shannon_Fano;;;;;Huffman;;;;;LZ78;;;;;LZ77" << endl;
     result << ";;t сж;t расж;k;res";
     result << ";;t сж;t расж;k;res";
     result << ";;t сж;t расж;k;res";
@@ -74,6 +79,7 @@ int main()
     FindClose(hf);
 
     cout << "\a";
+    cout << "time: " << to_string((float)(clock()-start)/1000)<<endl;;
     system("pause");
     return 0;
 }
